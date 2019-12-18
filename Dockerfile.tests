@@ -1,0 +1,12 @@
+ARG runtime_img="golang:1.13"
+
+FROM $runtime_img
+
+WORKDIR /go/src/github.com/chadgrant/service-status
+
+COPY main.go . 
+COPY api ./api/
+
+RUN go get ./...
+
+CMD ["go","test","-v","./..."]
