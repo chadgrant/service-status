@@ -5,10 +5,14 @@ use service_status;
 create table if not exists environment (
     id int not null auto_increment,
     name varchar(150) character set ascii not null,
+    friendly_name varchar(150) character set ascii not null,
     active bit not null default 1,
+    sort tinyint not null default 1,
     created datetime not null default current_timestamp,
     updated datetime null,
     constraint uc_name unique (name, active),
+    constraint uc_friendly_name unique (friendly_name, active),
+    index idx_friendly_name (friendly_name),
     primary key (id)
 );
 
@@ -18,8 +22,10 @@ create table if not exists service (
     friendly_name varchar(150) character set ascii not null,
     status varchar(150) not null default 'pending',
     active bit not null default 1,
+    sort tinyint not null default 1,
     created datetime not null default current_timestamp,
     updated datetime null,
+    index idx_friendly_name (friendly_name),
     constraint uc_name unique (name, active),
     primary key (id)
 );
@@ -42,6 +48,7 @@ create table if not exists service_endpoint (
     service_id bigint not null,
     endpoint varchar(512) character set ascii not null,
     created datetime not null default current_timestamp,
+    updated datetime null,
     primary key (id),
     constraint uc_endpoint unique (environment_id, service_id, endpoint),
     index idx_environment_service (environment_id, service_id),
@@ -58,6 +65,7 @@ create table if not exists service_instance (
     endpoint varchar(512) character set ascii not null,
     status varchar(150) character set ascii not null default 'pending',
     created datetime not null default current_timestamp,
+    updated datetime null,
     primary key (id),
     index idx_environment (environment_id),
     constraint uc_service_environment_endpoint unique (environment_id, service_id, endpoint),
@@ -72,6 +80,7 @@ create table if not exists service_environment (
     service_id bigint not null,
     deployment_id bigint not null,
     created datetime not null default current_timestamp,
+    updated datetime null,
     primary key (id),
     index idx_environment (environment_id),
     constraint uc_service_environment unique (environment_id, service_id),

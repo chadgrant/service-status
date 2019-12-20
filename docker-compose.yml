@@ -9,7 +9,7 @@ services:
      build:
        context: ./
        args:
-         - application=service-status-api
+         - application=service-status
          - friendly=Service Status API
          - build_hash=${BUILD_HASH:-localbuild_hashmissing}
          - build_user=${BUILD_USER:-unknown}
@@ -20,7 +20,7 @@ services:
      container_name: service_status_api
      restart: unless-stopped
      ports:
-       - 6000:8080
+       - 5010:8080
      environment:
       MYSQL_DATABASE: service_status
       MYSQL_USER: docker
@@ -54,7 +54,7 @@ services:
   #     ports:
   #      - 6100:80
   #     environment:
-  #       API_ENDPOINT: "http://localhost:6000"
+  #       API_ENDPOINT: "http://localhost:5010"
 
    data:
       build:

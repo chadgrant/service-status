@@ -8,6 +8,8 @@ import (
 
 	"github.com/chadgrant/go/http/infra"
 	"github.com/chadgrant/go/http/infra/gorilla"
+	"github.com/chadgrant/service-status/api/handlers"
+	"github.com/chadgrant/service-status/api/repository/mysql"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
@@ -15,11 +17,24 @@ import (
 func main() {
 	host := *flag.String("host", infra.GetEnvVar("SVC_HOST", "0.0.0.0"), "default binding 0.0.0.0")
 	port := *flag.Int("port", infra.GetEnvVarInt("SVC_PORT", 8080), "default port 8080")
+
+	mhost := *flag.String("mhost", infra.GetEnvVar("MYSQL_HOST", "localhost"), "default mysql host localhost")
+	mport := *flag.Int("mport", infra.GetEnvVarInt("MYSQL_PORT", 3306), "default port 8080")
+	muser := *flag.String("muser", infra.GetEnvVar("MYSQL_USER", "root"), "default user root")
+	mpassword := *flag.String("mpassword", infra.GetEnvVar("MYSQL_PASSWORD", ""), "")
+	mdb := *flag.String("mdb", infra.GetEnvVar("MYSQL_DATABASE", "service_status"), "default mysql database service_status")
 	flag.Parse()
 
+	eh := handlers.NewEnvironmentHandler(mysql.NewEnvironmentRepository(mhost, mport, muser, mpassword, mdb))
+
 	r := mux.NewRouter()
+	r.StrictSlash(true)
 	gorilla.Handle(r)
 	r.Use(infra.Recovery)
+
+	r.HandleFunc("/environments/", eh.GetAll).Methods(http.MethodGet)
+	r.HandleFunc("/environments/", eh.Add).Methods(http.MethodPost)
+	r.HandleFunc("/environment/{friendly}", eh.Update).Methods(http.MethodPut)
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./docs/")))
 
