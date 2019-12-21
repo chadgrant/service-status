@@ -1,0 +1,8 @@
+github.com/chadgrant/go v0.0.0-20191201221653-2bc6db865169 h1:G4QdTuPOtx0e1tsTQG/it9ncrwUt031jSBqyiFVF0Nw=
+github.com/chadgrant/go v0.0.0-20191201221653-2bc6db865169/go.mod h1:JSfqnN7MkRDF0eDZuWl6642Nyx5Ld1Uzn8dPgPXYPZM=
+github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
+github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
+github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
+github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
+github.com/rs/cors v1.7.0 h1:+88SsELBHx5r+hZ8TCkggzSstaWNbDvThkVK8H6f9ik=
+github.com/rs/cors v1.7.0/go.mod h1:gFx+x8UowdsKA9AchylcLynDq+nNFfI8FkUZdN/jGCU=

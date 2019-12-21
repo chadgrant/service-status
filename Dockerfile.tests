@@ -4,9 +4,10 @@ FROM $runtime_img
 
 WORKDIR /go/src/github.com/chadgrant/service-status
 
-COPY main.go . 
-COPY api ./api/
+COPY go.mod go.sum ./
+RUN go mod download
 
-RUN go get ./...
+COPY Makefile main.go ./
+COPY api ./api/
 
 CMD ["go","test","-v","./..."]
