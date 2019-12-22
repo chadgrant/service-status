@@ -7,7 +7,7 @@ create procedure service_endpoint_insert(
     in p_environment varchar(150),
     in p_service varchar(150),
     in p_endpoint varchar(512),
-    out service_endpoint_id bigint)
+    out p_endpoint_id bigint)
 begin
     select id into @env from environment where friendly_name=p_environment;
     select id into @svc from service where friendly_name=p_service;
@@ -15,7 +15,7 @@ begin
     insert into service_endpoint(environment_id, service_id, endpoint)
     values(@env,@svc,p_endpoint);
 
-    set service_endpoint_id = last_insert_id();
+    set p_endpoint_id = last_insert_id();
 end|
 
 delimiter ;

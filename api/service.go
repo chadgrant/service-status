@@ -11,3 +11,8 @@ type Service struct {
 	Created  *time.Time `json:"created" db:"created"`
 	Updated  *time.Time `json:"updated,omitempty" db:"updated"`
 }
+
+type ServiceEnvironment struct {
+	Service
+	Deployment *Deployment `json:"deployment"`
+}

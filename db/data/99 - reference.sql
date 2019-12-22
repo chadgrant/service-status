@@ -12,6 +12,16 @@ call deployment_insert('qa', 'sample_service', '1.0.0', @qa_deploy);
 call deployment_insert('staging', 'sample_service', '1.0.0', @stg_deploy);
 call deployment_insert('production', 'sample_service', '1.0.0', @prd_deploy);
 
+call deployment_insert('development', 'sample_service', '1.0.1', @dev_deploy);
+call deployment_insert('qa', 'sample_service', '1.0.1', @qa_deploy);
+call deployment_insert('staging', 'sample_service', '1.0.1', @stg_deploy);
+call deployment_insert('production', 'sample_service', '1.0.1', @prd_deploy);
+
+call deployment_insert('development', 'sample_service', '1.0.2', @dev_deploy);
+call deployment_insert('qa', 'sample_service', '1.0.2', @qa_deploy);
+call deployment_insert('staging', 'sample_service', '1.0.2', @stg_deploy);
+call deployment_insert('production', 'sample_service', '1.0.2', @prd_deploy);
+
 call service_environment_upsert('development', 'sample_service', @dev_deploy);
 call service_environment_upsert('qa', 'sample_service', @qa_deploy);
 call service_environment_upsert('staging', 'sample_service', @stg_deploy);
