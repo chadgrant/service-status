@@ -22,19 +22,19 @@ func TestEnvironmentRepo(t *testing.T) {
 	repo := mysql.NewEnvironmentRepository("localhost", 3306, "docker", "password", "service_status")
 
 	t.Run("Add", func(t *testing.T) {
-		testAdd(repo, t)
+		testAddEnvironment(repo, t)
 	})
 
 	t.Run("Update", func(t *testing.T) {
-		testUpdate(repo, t)
+		testUpdateEnvironment(repo, t)
 	})
 
 	t.Run("GetAll", func(t *testing.T) {
-		testGetAll(repo, t)
+		testGetAllEnvironments(repo, t)
 	})
 }
 
-func testAdd(repo EnvironmentRepository, t *testing.T) {
+func testAddEnvironment(repo EnvironmentRepository, t *testing.T) {
 	n := uuid.New()
 	t2 := time.Now().UTC()
 	e := &api.Environment{Name: "Test " + n.String(), Friendly: "test-" + n.String(), Created: &t2, Active: false}
@@ -43,7 +43,7 @@ func testAdd(repo EnvironmentRepository, t *testing.T) {
 	}
 }
 
-func testUpdate(repo EnvironmentRepository, t *testing.T) {
+func testUpdateEnvironment(repo EnvironmentRepository, t *testing.T) {
 	ctx := context.Background()
 	n := uuid.New()
 	t2 := time.Now().UTC()
@@ -85,7 +85,7 @@ func testUpdate(repo EnvironmentRepository, t *testing.T) {
 	}
 }
 
-func testGetAll(repo EnvironmentRepository, t *testing.T) {
+func testGetAllEnvironments(repo EnvironmentRepository, t *testing.T) {
 	e, err := repo.GetAll(context.Background())
 	if err != nil {
 		t.Error(err)

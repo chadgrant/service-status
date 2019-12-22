@@ -3,7 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -26,7 +25,6 @@ func NewEnvironmentHandler(repo repository.EnvironmentRepository) *EnvironmentHa
 func (h *EnvironmentHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	envs, err := h.repo.GetAll(r.Context())
 	if err != nil {
-		log.Printf("getting environments: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

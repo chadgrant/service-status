@@ -26,6 +26,7 @@ func main() {
 	flag.Parse()
 
 	eh := handlers.NewEnvironmentHandler(mysql.NewEnvironmentRepository(mhost, mport, muser, mpassword, mdb))
+	sh := handlers.NewServiceHandler(mysql.NewServiceRepository(mhost, mport, muser, mpassword, mdb))
 
 	r := mux.NewRouter()
 	r.StrictSlash(true)
@@ -35,6 +36,12 @@ func main() {
 	r.HandleFunc("/environments/", eh.GetAll).Methods(http.MethodGet)
 	r.HandleFunc("/environments/", eh.Add).Methods(http.MethodPost)
 	r.HandleFunc("/environment/{friendly}", eh.Update).Methods(http.MethodPut)
+
+	r.HandleFunc("/environment/{environment}/services", sh.GetForEnvironment).Methods(http.MethodGet)
+
+	r.HandleFunc("/services/", sh.GetAll).Methods(http.MethodGet)
+	r.HandleFunc("/services/", sh.Add).Methods(http.MethodPost)
+	r.HandleFunc("/service/{friendly}", sh.Update).Methods(http.MethodPut)
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./docs/")))
 
