@@ -1,8 +1,12 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"strconv"
+
+	"github.com/chadgrant/go/http/infra"
 )
 
 func getIntVarOrDefault(vars map[string]string, name string, defaultVal int) int {
@@ -34,4 +38,12 @@ func prevLink(url string, page, size int) string {
 		return ""
 	}
 	return fmt.Sprintf("%s?page=%d&size=%d", url, page-1, size)
+}
+
+func returnJSON(w http.ResponseWriter, r *http.Request, o interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+
+	if err := json.NewEncoder(w).Encode(o); err != nil {
+		infra.Error(w, r, http.StatusInternalServerError, err)
+	}
 }

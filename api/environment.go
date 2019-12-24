@@ -2,6 +2,9 @@ package api
 
 import "time"
 
+// Environment entity
+// swagger:parameters addenvironment
+// swagger:parameters putenvironment
 type Environment struct {
 	Name     string     `json:"name" db:"name"`
 	Friendly string     `json:"friendly" db:"friendly_name"`

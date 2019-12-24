@@ -41,7 +41,7 @@ func (h *DeploymentHandler) GetPaged(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	returnJson(w, r, &PagedDeploys{Page: page, Size: size, Total: t, Results: deploys,
+	returnJSON(w, r, &PagedDeploys{Page: page, Size: size, Total: t, Results: deploys,
 		Next: nextLink("/deployments", page, size, t),
 		Prev: prevLink("/deployments", page, size)})
 }
@@ -58,7 +58,7 @@ func (h *DeploymentHandler) GetForEnvironmentPaged(w http.ResponseWriter, r *htt
 		return
 	}
 
-	returnJson(w, r, &PagedDeploys{Page: page, Size: size, Total: t, Results: deploys,
+	returnJSON(w, r, &PagedDeploys{Page: page, Size: size, Total: t, Results: deploys,
 		Next: nextLink(fmt.Sprintf("/environment/%s/deployments", env), page, size, t),
 		Prev: prevLink(fmt.Sprintf("/environment/%s/deployments", env), page, size)})
 }
@@ -76,7 +76,7 @@ func (h *DeploymentHandler) GetForServicePaged(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	returnJson(w, r, &PagedDeploys{Page: page, Size: size, Total: t, Results: deploys,
+	returnJSON(w, r, &PagedDeploys{Page: page, Size: size, Total: t, Results: deploys,
 		Next: nextLink(fmt.Sprintf("/environment/%s/service/%s/deployments", env, svc), page, size, t),
 		Prev: prevLink(fmt.Sprintf("/environment/%s/service/%s/deployments", env, svc), page, size)})
 }

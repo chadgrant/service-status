@@ -30,7 +30,7 @@ func (h *ServiceHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	returnJson(w, r, svcs)
+	returnJSON(w, r, svcs)
 }
 
 func (h *ServiceHandler) GetForEnvironment(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +43,7 @@ func (h *ServiceHandler) GetForEnvironment(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	returnJson(w, r, svcs)
+	returnJSON(w, r, svcs)
 }
 
 func (h *ServiceHandler) Add(w http.ResponseWriter, r *http.Request) {
