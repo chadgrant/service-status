@@ -5,6 +5,7 @@ BUILD_GROUP?=sample-group
 BUILD_BRANCH?=$(shell git rev-parse --abbrev-ref HEAD)
 BUILD_HASH?=$(shell git rev-parse HEAD)
 BUILD_DATE?=$(shell date -u +%s)
+PROTOC_VERSION?=3.6.1
 
 ifdef BUILD_HASH
 	BUILD_USER?=$(shell git --no-pager show -s --format='%ae' $(BUILD_HASH))
@@ -77,3 +78,41 @@ docker-clean: docker-rm
 	-docker rmi `docker images --format '{{.Repository}}:{{.Tag}}' | grep "chadgrant/service-status"` -f
 	-docker rmi `docker images -qf dangling=true`
 	-docker volume rm `docker volume ls -qf dangling=true`
+
+generate:
+	docker run --rm -it -v ${PWD}:/go/src/github.com/chadgrant/service-status \
+	-w /go/src/github.com/chadgrant/service-status/ \
+	chadgrant/protobuff:3.6.1 \
+	--proto_path=./api/proto/ \
+	-I /go/src \
+	-I /go/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+	-I /go/src/github.com/grpc-ecosystem/grpc-gateway/ \
+	-I /go/src/github.com/gogo/protobuf/protobuf/ \
+	--gogo_out=./api/generated/,plugins=grpc,\
+Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
+Mgoogle/api/annotations.proto=github.com/gogo/googleapis/google/api,\
+Mgoogle/protobuf/field_mask.proto=github.com/gogo/protobuf/types:/go/src/ \
+  --grpc-gateway_out=allow_patch_feature=false,\
+Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
+Mgoogle/api/annotations.proto=github.com/gogo/googleapis/google/api,\
+Mgoogle/protobuf/field_mask.proto=github.com/gogo/protobuf/types:/go/src/ \
+  --govalidators_out=gogoimport=true,\
+Mgoogle/protobuf/timestamp.proto=github.com/gogo/protobuf/types,\
+Mgoogle/api/annotations.proto=github.com/gogo/googleapis/google/api,\
+Mgoogle/protobuf/field_mask.proto=github.com/gogo/protobuf/types:/go/src/ \
+  --swagger_out=logtostderr=true,fqn_for_swagger_name=false:./docs/swagger/ \
+  ./api/proto/servicestatus.proto
+
+	#take back ownership of files generated in docker
+	sudo chown -R $$USER ./api ./docs
+	# Workaround for https://github.com/grpc-ecosystem/grpc-gateway/issues/229.
+	sed -i.bak "s/empty.Empty/types.Empty/g" api/generated/servicestatus.pb.gw.go && rm api/generated/servicestatus.pb.gw.go.bak
+
+install:
+	go get \
+		github.com/gogo/protobuf/proto \
+		github.com/gogo/protobuf/gogoproto \
+		github.com/gogo/protobuf/protoc-gen-gogo \
+		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger \
+		github.com/mwitkow/go-proto-validators/protoc-gen-govalidators

@@ -1,0 +1,188 @@
+syntax="proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+option go_package = "github.com/chadgrant/service-status/api/generated;generated";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "Service Status API";
+    version: "1.0";
+    contact: {
+        name:"Chad Grant";
+        email:"chad.grant@me.com";
+    }
+  };
+  external_docs: {
+    url: "https://github.com/gogo/grpc-example";
+    description: "gRPC example repository";
+  }
+  schemes: HTTPS;
+  schemes: HTTP;
+};
+
+// Enable custom Marshal method.
+option (gogoproto.marshaler_all) = true;
+// Enable custom Unmarshal method.
+option (gogoproto.unmarshaler_all) = true;
+// Enable custom Size method (Required by Marshal and Unmarshal).
+option (gogoproto.sizer_all) = true;
+// Enable registration with golang/protobuf for the grpc-gateway.
+option (gogoproto.goproto_registration) = true;
+// Enable generation of XXX_MessageName methods for grpc-go/status.
+option (gogoproto.messagename_all) = true;
+
+service Environments {
+    rpc Add(Environment) returns (Environment) {
+        option (google.api.http) = {
+            post: "/v1/environments"
+        };
+    }
+    rpc Get(GetEnvironmentsRequest) returns (EnvironmentsPaged) {
+        option (google.api.http) = {
+            get: "/v1/environments"
+        };
+    }
+    rpc Update(Environment) returns (Environment) {
+        option (google.api.http) = {
+            put: "/v1/environment/{key}"
+            body: "key"
+        };
+    }
+}
+
+service Deployments {
+    rpc Get(GetDeploymentsRequest) returns (DeploymentsPaged) {
+        option (google.api.http) = {
+            get: "/v1/deployments"
+        };
+    }
+    rpc GetForEnvironment(GetDeploymentsRequest) returns (DeploymentsPaged) {
+        option (google.api.http) = {
+            get: "/v1/environment/{environment}/deployments"
+        };
+    }
+    rpc GetForService(GetDeploymentsRequest) returns (DeploymentsPaged) {
+        option (google.api.http) = {
+            get: "/v1/environment/{environment}/service/{service}/deployments"
+        };
+    }
+    rpc Add(Deployment) returns (Deployment) {
+        option (google.api.http) = {
+            post: "/v1/environment/{environment}/service/{service}/deployments"
+            body: "*"
+        };
+    }
+}
+
+service Services {
+    rpc Add(Service) returns (Service) {
+        option (google.api.http) = {
+            post: "/v1/services"
+            body: "*"
+        };
+    }
+    rpc Get(GetServicesRequest) returns (ServicesPaged) {
+        option (google.api.http) = {
+            get: "/v1/services"
+        };
+    }
+    rpc GetForEnvironment(GetServicesRequest) returns (ServicesPaged) {
+        option (google.api.http) = {
+            get: "/v1/environments/{environment}/services"
+        };
+    }    
+    rpc Update(Service) returns (Service) {
+        option (google.api.http) = {
+            put: "/v1/service/{key}"
+            body: "key"
+        };
+    }
+}
+
+message Service {
+    string name = 1;
+    string friendly = 2;
+    bool active = 3;
+    string status = 4;
+    int32 sort = 5;
+    string key = 6;
+    google.protobuf.Timestamp created = 7 [
+        (gogoproto.stdtime) = true
+    ];
+    google.protobuf.Timestamp updated = 8 [
+        (gogoproto.stdtime) = true
+    ];
+}
+
+message GetServicesRequest {
+    int32 page = 1;
+    int32 page_size = 2 [json_name="page_size"];
+    string environment = 3;
+}
+
+message ServicesPaged {
+    repeated Service results = 1;
+    int32 page = 2;
+    int32 page_size = 3 [json_name="page_size"];
+    int32 total = 4;
+    Links links = 5;    
+}
+
+message Environment {
+    string name = 1;
+    string friendly = 2;
+    bool active = 3;
+    int32 sort = 4;
+    string key = 5;
+    google.protobuf.Timestamp created = 6 [
+        (gogoproto.stdtime) = true
+    ];
+    google.protobuf.Timestamp updated = 7 [
+        (gogoproto.stdtime) = true
+    ];
+}
+
+message EnvironmentsPaged {
+    repeated Environment results = 1;
+}
+
+message Deployment {
+    string id = 1 [(gogoproto.customname) = "ID"];
+    string service = 2;
+    string environment = 3;
+    string build_number = 4 [json_name="build_number"];
+    google.protobuf.Timestamp created = 5 [
+        (gogoproto.stdtime) = true
+    ];
+    google.protobuf.Timestamp updated = 6 [
+        (gogoproto.stdtime) = true
+    ];
+}
+
+message DeploymentsPaged {
+    repeated Deployment results = 1;
+    int32 page = 2;
+    int32 page_size = 3 [json_name="page_size"];
+    int32 total = 4;
+    Links links = 5;    
+}
+
+message GetEnvironmentsRequest {
+}
+
+message GetDeploymentsRequest{
+    int32 page = 1;
+    int32 page_size = 2 [json_name="page_size"];
+    string environment = 3;
+    string service = 4;
+}
+
+message Links {
+    string next = 1;
+    string prev = 2;
+}
