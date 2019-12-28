@@ -11,21 +11,18 @@ import (
 	"os"
 
 	"github.com/gogo/gateway"
-	"github.com/grpc-ecosystem/go-grpc-middleware/validator"
+	grpc_validator "github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/rs/cors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 
 	"github.com/chadgrant/go/http/infra"
-	//"github.com/chadgrant/go/http/infra/gorilla"
 	"github.com/chadgrant/service-status/api/generated"
-	//"github.com/chadgrant/service-status/api/handlers"
 	"github.com/chadgrant/service-status/api/insecure"
 	"github.com/chadgrant/service-status/api/repository"
 	"github.com/chadgrant/service-status/api/repository/mysql"
 	"github.com/chadgrant/service-status/api/server"
-	//"github.com/gorilla/mux"
-	"github.com/rs/cors"
 )
 
 func main() {
@@ -152,7 +149,6 @@ func httpserve(rmux *runtime.ServeMux, host string, port, tlsport int) error {
 		log.Fatalln(server.ListenAndServeTLS("", ""))
 	}()
 
-	
 	log.Printf("Serving http gateway on http://%s:%d\n", host, port)
 	log.Printf("Serving http docs on http://%s:%d/docs/swagger", host, port)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf("%s:%d", host, port), c.Handler(mux)))
