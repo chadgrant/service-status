@@ -16,3 +16,5 @@
 
 .vscode
 service-status
+cmd/servicestatus/servicestatus
+cmd/servicestatus-cli/servicestatus-cli

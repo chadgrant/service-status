@@ -1,0 +1,77 @@
+// Code generated with goa v3.0.9, DO NOT EDIT.
+//
+// environment protocol buffer definition
+//
+// Command:
+// $ goa gen servicestatus/design
+
+syntax = "proto3";
+
+package environment;
+
+option go_package = "environmentpb";
+
+// The environment service performs operations on environments
+service Environment {
+	// List all environments
+	rpc List (ListRequest) returns (EnvironmentCollection);
+	// adds a new environment and returns the url of where to retrieve it
+	rpc Add (AddRequest) returns (AddResponse);
+	// update an existing environment
+	rpc Update (UpdateRequest) returns (UpdateResponse);
+}
+
+message ListRequest {
+}
+
+message EnvironmentCollection {
+	repeated Environment1 field = 1;
+}
+
+message Environment1 {
+	// Name of environment
+	string name = 1;
+	// url friendly name of environment used for REST based operations
+	string friendly = 2;
+	// is environment active
+	bool active = 3;
+	// useful for sorting in UI
+	uint32 sort = 4;
+	// timestamp of when environment was created
+	string created = 5;
+	// timestamp of when environment was updated
+	string updated = 7;
+}
+
+message AddRequest {
+	// Name of environment
+	string name = 1;
+	// url friendly name of environment used for REST based operations
+	string friendly = 2;
+	// is environment active
+	bool active = 3;
+	// useful for sorting in UI
+	uint32 sort = 4;
+	// used for update case of changing key, PUT /environment/key
+	string key = 5;
+}
+
+message AddResponse {
+	string field = 1;
+}
+
+message UpdateRequest {
+	// Name of environment
+	string name = 1;
+	// url friendly name of environment used for REST based operations
+	string friendly = 2;
+	// is environment active
+	bool active = 3;
+	// useful for sorting in UI
+	uint32 sort = 4;
+	// used for update case of changing key, PUT /environment/key
+	string key = 5;
+}
+
+message UpdateResponse {
+}

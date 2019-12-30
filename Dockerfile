@@ -17,8 +17,10 @@ WORKDIR /go/src/github.com/chadgrant/$application/
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY Makefile main.go ./
-COPY api ./api/
+COPY Makefile *.go ./
+COPY api ./api
+COPY gen ./gen
+COPY cmd ./cmd
 
 RUN BUILDOUT=/go/bin/goapp make build
 

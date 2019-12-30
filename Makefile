@@ -5,6 +5,7 @@ BUILD_GROUP?=sample-group
 BUILD_BRANCH?=$(shell git rev-parse --abbrev-ref HEAD)
 BUILD_HASH?=$(shell git rev-parse HEAD)
 BUILD_DATE?=$(shell date -u +%s)
+PACKAGE?=servicestatus
 
 ifdef BUILD_HASH
 	BUILD_USER?=$(shell git --no-pager show -s --format='%ae' $(BUILD_HASH))
@@ -36,7 +37,18 @@ get:
 	go get -u ./...
 
 build:
+	cd ./cmd/${PACKAGE}; \
 	go build ${OUTPUT} -ldflags "-s ${LDFLAGS}"
+
+build-cli:
+	cd ./cmd/${PACKAGE}-cli; \
+	go build ${OUTPUT} -ldflags "-s ${LDFLAGS}"
+
+run:
+	./cmd/${PACKAGE}/${PACKAGE}
+
+run-cli:
+	./cmd/${PACKAGE}-cli/${PACKAGE}-cli --help
 
 test: get
 	go test ./... -v
@@ -77,3 +89,23 @@ docker-clean: docker-rm
 	-docker rmi `docker images --format '{{.Repository}}:{{.Tag}}' | grep "chadgrant/service-status"` -f
 	-docker rmi `docker images -qf dangling=true`
 	-docker volume rm `docker volume ls -qf dangling=true`
+
+generate:
+	docker run --rm -it -v ${PWD}:/go/src/github.com/chadgrant/service-status \
+	-w /go/src/github.com/chadgrant/service-status/ \
+	--entrypoint goa \
+	chadgrant/protobuff:3.6.1 \
+	gen servicestatus/design
+
+	#take back ownership of files generated in docker
+	sudo chown -R $$USER ./gen
+
+generate-example:
+	docker run --rm -it -v ${PWD}:/go/src/github.com/chadgrant/service-status \
+	-w /go/src/github.com/chadgrant/service-status/ \
+	--entrypoint goa \
+	chadgrant/protobuff:3.6.1 \
+	example servicestatus/design
+
+	#take back ownership of files generated in docker
+	sudo chown -R $$USER ./gen ./cmd
