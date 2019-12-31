@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/chadgrant/service-status/api"
+	"github.com/chadgrant/servicestatus/api"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )

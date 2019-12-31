@@ -2,8 +2,8 @@ package servicestatus
 
 import (
 	"context"
+	environment "github.com/chadgrant/servicestatus/gen/environment"
 	"log"
-	environment "servicestatus/gen/environment"
 	"strings"
 	"time"
 )

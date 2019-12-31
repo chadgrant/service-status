@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	cli "servicestatus/gen/grpc/cli/servicestatus"
 
+	cli "github.com/chadgrant/servicestatus/gen/grpc/cli/servicestatus"
 	goa "goa.design/goa/v3/pkg"
 	"google.golang.org/grpc"
 )

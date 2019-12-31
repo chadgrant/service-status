@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/chadgrant/service-status/api"
-	"github.com/chadgrant/service-status/api/repository"
+	"github.com/chadgrant/servicestatus/api"
+	"github.com/chadgrant/servicestatus/api/repository"
 	"github.com/gorilla/mux"
 )
 

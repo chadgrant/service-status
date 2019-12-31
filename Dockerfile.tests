@@ -2,7 +2,7 @@ ARG runtime_img="golang:1.13"
 
 FROM $runtime_img
 
-WORKDIR /go/src/github.com/chadgrant/service-status
+WORKDIR /go/src/github.com/chadgrant/servicestatus
 
 COPY go.mod go.sum ./
 RUN go mod download

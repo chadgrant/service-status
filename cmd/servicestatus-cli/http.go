@@ -2,9 +2,9 @@ package main
 
 import (
 	"net/http"
-	cli "servicestatus/gen/http/cli/servicestatus"
 	"time"
 
+	cli "github.com/chadgrant/servicestatus/gen/http/cli/servicestatus"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )

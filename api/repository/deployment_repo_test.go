@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/chadgrant/service-status/api"
-	"github.com/chadgrant/service-status/api/repository/mysql"
+	"github.com/chadgrant/servicestatus/api"
+	"github.com/chadgrant/servicestatus/api/repository/mysql"
 )
 
 func TestDeploymentRepo(t *testing.T) {

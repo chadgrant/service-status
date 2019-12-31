@@ -3,16 +3,16 @@
 // environment gRPC client encoders and decoders
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package client
 
 import (
 	"context"
-	environment "servicestatus/gen/environment"
-	environmentviews "servicestatus/gen/environment/views"
-	environmentpb "servicestatus/gen/grpc/environment/pb"
 
+	environment "github.com/chadgrant/servicestatus/gen/environment"
+	environmentviews "github.com/chadgrant/servicestatus/gen/environment/views"
+	environmentpb "github.com/chadgrant/servicestatus/gen/grpc/environment/pb"
 	goagrpc "goa.design/goa/v3/grpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"

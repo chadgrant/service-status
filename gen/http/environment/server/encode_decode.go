@@ -3,7 +3,7 @@
 // environment HTTP server encoders and decoders
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package server
 
@@ -11,9 +11,9 @@ import (
 	"context"
 	"io"
 	"net/http"
-	environment "servicestatus/gen/environment"
-	environmentviews "servicestatus/gen/environment/views"
 
+	environment "github.com/chadgrant/servicestatus/gen/environment"
+	environmentviews "github.com/chadgrant/servicestatus/gen/environment/views"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )

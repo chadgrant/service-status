@@ -8,10 +8,11 @@ import (
 	"net/url"
 	"os"
 	"os/signal"
-	servicestatus "servicestatus"
-	environment "servicestatus/gen/environment"
 	"strings"
 	"sync"
+
+	servicestatus "github.com/chadgrant/servicestatus"
+	environment "github.com/chadgrant/servicestatus/gen/environment"
 )
 
 func main() {

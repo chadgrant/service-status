@@ -3,13 +3,14 @@
 // environment service
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package environment
 
 import (
 	"context"
-	environmentviews "servicestatus/gen/environment/views"
+
+	environmentviews "github.com/chadgrant/servicestatus/gen/environment/views"
 )
 
 // The environment service performs operations on environments

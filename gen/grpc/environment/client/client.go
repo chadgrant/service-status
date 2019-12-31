@@ -3,14 +3,14 @@
 // environment gRPC client
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package client
 
 import (
 	"context"
-	environmentpb "servicestatus/gen/grpc/environment/pb"
 
+	environmentpb "github.com/chadgrant/servicestatus/gen/grpc/environment/pb"
 	goagrpc "goa.design/goa/v3/grpc"
 	goa "goa.design/goa/v3/pkg"
 	"google.golang.org/grpc"

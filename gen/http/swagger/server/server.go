@@ -3,15 +3,15 @@
 // swagger HTTP server
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package server
 
 import (
 	"context"
 	"net/http"
-	swagger "servicestatus/gen/swagger"
 
+	swagger "github.com/chadgrant/servicestatus/gen/swagger"
 	goahttp "goa.design/goa/v3/http"
 )
 

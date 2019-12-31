@@ -3,16 +3,16 @@
 // environment gRPC client types
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package client
 
 import (
-	environment "servicestatus/gen/environment"
-	environmentviews "servicestatus/gen/environment/views"
-	environmentpb "servicestatus/gen/grpc/environment/pb"
 	"unicode/utf8"
 
+	environment "github.com/chadgrant/servicestatus/gen/environment"
+	environmentviews "github.com/chadgrant/servicestatus/gen/environment/views"
+	environmentpb "github.com/chadgrant/servicestatus/gen/grpc/environment/pb"
 	goa "goa.design/goa/v3/pkg"
 )
 

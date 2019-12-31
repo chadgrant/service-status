@@ -3,15 +3,16 @@
 // environment gRPC client CLI support package
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package client
 
 import (
 	"encoding/json"
 	"fmt"
-	environment "servicestatus/gen/environment"
-	environmentpb "servicestatus/gen/grpc/environment/pb"
+
+	environment "github.com/chadgrant/servicestatus/gen/environment"
+	environmentpb "github.com/chadgrant/servicestatus/gen/grpc/environment/pb"
 )
 
 // BuildAddPayload builds the payload for the environment add endpoint from CLI

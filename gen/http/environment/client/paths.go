@@ -3,7 +3,7 @@
 // HTTP request path constructors for the environment service.
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package client
 

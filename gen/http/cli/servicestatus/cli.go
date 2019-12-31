@@ -3,7 +3,7 @@
 // servicestatus HTTP client CLI support package
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package cli
 
@@ -12,8 +12,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	environmentc "servicestatus/gen/http/environment/client"
 
+	environmentc "github.com/chadgrant/servicestatus/gen/http/environment/client"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )
