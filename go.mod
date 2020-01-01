@@ -3,7 +3,11 @@ module github.com/chadgrant/service-status
 go 1.13
 
 require (
+<<<<<<< HEAD
 	github.com/chadgrant/go v0.0.0-20191227235456-6ae136ec770c
+=======
+	github.com/chadgrant/go-http-infra v1.0.2
+>>>>>>> master
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gogo/gateway v1.1.0
 	github.com/gogo/googleapis v1.3.1
