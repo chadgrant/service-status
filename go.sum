@@ -1,9 +1,8 @@
-github.com/chadgrant/go v0.0.0-20191201221653-2bc6db865169 h1:G4QdTuPOtx0e1tsTQG/it9ncrwUt031jSBqyiFVF0Nw=
-github.com/chadgrant/go v0.0.0-20191201221653-2bc6db865169/go.mod h1:JSfqnN7MkRDF0eDZuWl6642Nyx5Ld1Uzn8dPgPXYPZM=
+github.com/chadgrant/go-http-infra v1.0.2 h1:PBNBL/xe+wBNLInadi5SYEldYYVLwR50s+cj+2e+X5Q=
+github.com/chadgrant/go-http-infra v1.0.2/go.mod h1:ipyOgYk0KV1njxptASKN2w6sxWy4NzMd/43prwVh5yg=
 github.com/go-sql-driver/mysql v1.4.0/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
-github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
 github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=

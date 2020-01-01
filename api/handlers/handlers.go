@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/chadgrant/go/http/infra"
+	"github.com/chadgrant/go-http-infra/infra"
 )
 
 func getIntVarOrDefault(vars map[string]string, name string, defaultVal int) int {
