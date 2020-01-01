@@ -3,7 +3,7 @@
 // environment endpoints
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package environment
 

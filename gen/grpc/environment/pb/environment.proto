@@ -3,7 +3,7 @@
 // environment protocol buffer definition
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 syntax = "proto3";
 

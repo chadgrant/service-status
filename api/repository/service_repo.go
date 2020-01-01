@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/chadgrant/service-status/api"
+	"github.com/chadgrant/servicestatus/api"
 )
 
 type ServiceRepository interface {

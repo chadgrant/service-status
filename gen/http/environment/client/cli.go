@@ -3,16 +3,16 @@
 // environment HTTP client CLI support package
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package client
 
 import (
 	"encoding/json"
 	"fmt"
-	environment "servicestatus/gen/environment"
 	"unicode/utf8"
 
+	environment "github.com/chadgrant/servicestatus/gen/environment"
 	goa "goa.design/goa/v3/pkg"
 )
 

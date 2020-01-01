@@ -91,21 +91,21 @@ docker-clean: docker-rm
 	-docker volume rm `docker volume ls -qf dangling=true`
 
 generate:
-	docker run --rm -it -v ${PWD}:/go/src/github.com/chadgrant/service-status \
-	-w /go/src/github.com/chadgrant/service-status/ \
+	docker run --rm -it -v ${PWD}:/go/src/github.com/chadgrant/servicestatus \
+	-w /go/src/github.com/chadgrant/servicestatus/ \
 	--entrypoint goa \
 	chadgrant/protobuff:3.6.1 \
-	gen servicestatus/design
+	gen github.com/chadgrant/servicestatus/design
 
 	#take back ownership of files generated in docker
 	sudo chown -R $$USER ./gen
 
 generate-example:
-	docker run --rm -it -v ${PWD}:/go/src/github.com/chadgrant/service-status \
-	-w /go/src/github.com/chadgrant/service-status/ \
+	docker run --rm -it -v ${PWD}:/go/src/github.com/chadgrant/servicestatus \
+	-w /go/src/github.com/chadgrant/servicestatus/ \
 	--entrypoint goa \
 	chadgrant/protobuff:3.6.1 \
-	example servicestatus/design
+	example github.com/chadgrant/servicestatus/design
 
 	#take back ownership of files generated in docker
 	sudo chown -R $$USER ./gen ./cmd

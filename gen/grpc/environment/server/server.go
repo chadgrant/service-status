@@ -3,15 +3,15 @@
 // environment gRPC server
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package server
 
 import (
 	"context"
-	environment "servicestatus/gen/environment"
-	environmentpb "servicestatus/gen/grpc/environment/pb"
 
+	environment "github.com/chadgrant/servicestatus/gen/environment"
+	environmentpb "github.com/chadgrant/servicestatus/gen/grpc/environment/pb"
 	goagrpc "goa.design/goa/v3/grpc"
 	goa "goa.design/goa/v3/pkg"
 )

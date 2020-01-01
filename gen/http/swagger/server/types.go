@@ -3,6 +3,6 @@
 // swagger HTTP server types
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package server

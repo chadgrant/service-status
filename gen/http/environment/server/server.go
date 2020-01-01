@@ -3,15 +3,15 @@
 // environment HTTP server
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package server
 
 import (
 	"context"
 	"net/http"
-	environment "servicestatus/gen/environment"
 
+	environment "github.com/chadgrant/servicestatus/gen/environment"
 	goahttp "goa.design/goa/v3/http"
 	goa "goa.design/goa/v3/pkg"
 )

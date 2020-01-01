@@ -3,7 +3,7 @@
 // servicestatus gRPC client CLI support package
 //
 // Command:
-// $ goa gen servicestatus/design
+// $ goa gen github.com/chadgrant/servicestatus/design
 
 package cli
 
@@ -11,8 +11,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	environmentc "servicestatus/gen/grpc/environment/client"
 
+	environmentc "github.com/chadgrant/servicestatus/gen/grpc/environment/client"
 	goa "goa.design/goa/v3/pkg"
 	grpc "google.golang.org/grpc"
 )

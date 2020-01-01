@@ -1,8 +1,8 @@
 package servicestatus
 
 import (
+	swagger "github.com/chadgrant/servicestatus/gen/swagger"
 	"log"
-	swagger "servicestatus/gen/swagger"
 )
 
 // swagger service example implementation.

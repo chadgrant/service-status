@@ -6,10 +6,17 @@ import (
 	"log"
 	"net/http"
 
+<<<<<<< HEAD
 	"github.com/chadgrant/go-http-infra/infra"
 	"github.com/chadgrant/go-http-infra/gorilla"
 	"github.com/chadgrant/service-status/api/handlers"
 	"github.com/chadgrant/service-status/api/repository/mysql"
+=======
+	"github.com/chadgrant/go/http/infra"
+	"github.com/chadgrant/go/http/infra/gorilla"
+	"github.com/chadgrant/servicestatus/api/handlers"
+	"github.com/chadgrant/servicestatus/api/repository/mysql"
+>>>>>>> 4d68333ad2e2cad3b8d34bd2008d6abbc57b2a9f
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
