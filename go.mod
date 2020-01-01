@@ -3,7 +3,7 @@ module servicestatus
 go 1.13
 
 require (
-	github.com/chadgrant/go v0.0.0-20191201221653-2bc6db865169
+	github.com/chadgrant/go-http-infra v1.0.2
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/golang/protobuf v1.3.2
 	github.com/google/uuid v1.1.1
