@@ -16,6 +16,6 @@ require (
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/mwitkow/go-proto-validators v0.3.0
 	github.com/rs/cors v1.7.0
-	google.golang.org/genproto v0.0.0-20191223191004-3caeed10a8bf
+	google.golang.org/genproto v0.0.0-20191223191004-3caeed10a8bf // indirect
 	google.golang.org/grpc v1.26.0
 )
