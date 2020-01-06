@@ -16,11 +16,21 @@ services:
          - build_branch=${BUILD_BRANCH:-nobranch}
          - build_number=${BUILD_NUMBER:-1.0.0}
          - build_group=${BUILD_GROUP:-nogroupspecified}
-     image: chadgrant/service-status-api:${BUILD_NUMBER:-1.0.0}
+         - repo_url=${REPO_URL}
+         - vendor=${VENDOR:-Chad Grant}
+         - builder_img=${REGISTRY}/chadgrant/base:golang-1.13.5-alpine
+         - runtime_img=${REGISTRY}/chadgrant/base:alpine-3.11.2        
+     image: ${REGISTRY}/chadgrant/service-status-api:${BUILD_NUMBER:-1.0.0}
      container_name: service_status_api
      restart: unless-stopped
      ports:
        - 5010:8080
+     healthcheck:
+        test: "curl -f http://localhost:8080/health/liveness || exit 1"
+        interval: 30s
+        timeout: 2s
+        retries: 3
+        start_period: 5s
      environment:
       MYSQL_DATABASE: service_status
       MYSQL_USER: docker
@@ -32,7 +42,9 @@ services:
       build:
        context: ./
        dockerfile: Dockerfile.tests
-      image: chadgrant/service-status-api-test:${BUILD_NUMBER:-1.0.0}
+       args:
+        - runtime_img=${REGISTRY}/chadgrant/golang-testing:1.13.5-alpine
+      image: ${REGISTRY}/chadgrant/service-status-api-test:${BUILD_NUMBER:-1.0.0}
       container_name: service_status_api_test
       depends_on:
         - data
@@ -48,7 +60,7 @@ services:
   #  ui:
   #     build:
   #       context: ./ui
-  #     image: chadgrant/service-status-ui:${BUILD_NUMBER:-1.0.0}
+  #     image: ${REGISTRY}/chadgrant/service-status-ui:${BUILD_NUMBER:-1.0.0}
   #     container_name: service_status_ui
   #     restart: unless-stopped
   #     ports:
@@ -59,7 +71,7 @@ services:
    data:
       build:
        context: ./db
-      image: chadgrant/service-status-data:${BUILD_NUMBER:-1.0.0}
+      image: ${REGISTRY}/chadgrant/service-status-data:${BUILD_NUMBER:-1.0.0}
       container_name: service_status_data
       restart: unless-stopped
       ports:

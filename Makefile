@@ -1,11 +1,16 @@
-APPLICATION?=service-status-api
+APPLICATION?=service-status
 FRIENDLY?=Service Status API
+DESCRIPTION?=For monitoring deployments and running microservices
+VENDOR?=Chad Grant
 BUILD_NUMBER?=1.0.0
 BUILD_GROUP?=sample-group
 BUILD_BRANCH?=$(shell git rev-parse --abbrev-ref HEAD)
 BUILD_HASH?=$(shell git rev-parse HEAD)
 BUILD_DATE?=$(shell date -u +%s)
-PROTOC_VERSION?=3.6.1
+REPO_URL?=https://github.com/chadgrant/docker-tools/dynamodb-go-sample
+REGISTRY?=docker.io
+BUILD_USER?=$(USER)
+TAG?=chadgrant/service-status
 
 ifdef BUILD_HASH
 	BUILD_USER?=$(shell git --no-pager show -s --format='%ae' $(BUILD_HASH))
@@ -15,7 +20,7 @@ ifdef BUILDOUT
 	OUTPUT=-o ${BUILDOUT}
 endif
 
-PKG=github.com/chadgrant/go/http/infra
+PKG=github.com/chadgrant/go-http-infra/infra
 LDFLAGS += -X '${PKG}.Application=${APPLICATION}'
 LDFLAGS += -X '${PKG}.Friendly=${FRIENDLY}'
 LDFLAGS += -X '${PKG}.BuildNumber=${BUILD_NUMBER}'
@@ -30,20 +35,17 @@ LDFLAGS += -X '${PKG}.CompilerVersion=$(shell go version)'
 .DEFAULT_GOAL := help
 .EXPORT_ALL_VARIABLES:
 
-clean:
-	-rm service-status
-
-get:
-	go get -u ./...
-
 build:
 	go build ${OUTPUT} -ldflags "-s ${LDFLAGS}"
 
-test: get
+test:
 	go test ./... -v
 
 docker-build:
 	docker-compose build
+
+docker-build-api:
+	docker-compose build api
 
 docker-push: docker-build
 	docker-compose push api
@@ -75,6 +77,7 @@ docker-rm: docker-stop
 	-docker container rm `docker container ls -aq --filter name=service_status*`
 
 docker-clean: docker-rm
+<<<<<<< HEAD
 	-docker rmi `docker images --format '{{.Repository}}:{{.Tag}}' | grep "chadgrant/service-status"` -f
 	-docker rmi `docker images -qf dangling=true`
 	-docker volume rm `docker volume ls -qf dangling=true`
@@ -116,3 +119,7 @@ install:
 		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
 		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger \
 		github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
+=======
+	-docker rmi `docker images --format '{{.Repository}}:{{.Tag}}' | grep "${TAG}"` -f
+	-docker system prune -f --volumes
+>>>>>>> master
