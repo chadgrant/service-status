@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/chadgrant/go/http/infra"
-	"github.com/chadgrant/go/http/infra/gorilla"
+	"github.com/chadgrant/go-http-infra/infra"
+	"github.com/chadgrant/go-http-infra/gorilla"
 	"github.com/chadgrant/service-status/api/handlers"
 	"github.com/chadgrant/service-status/api/repository/mysql"
 	"github.com/gorilla/mux"
