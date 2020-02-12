@@ -1,66 +1,74 @@
 version: '3.4'
 
+x-default-service: &svc
+  build:
+    args: &args
+      VENDOR: ${VENDOR:-chadgrant}
+      GROUP: ${GROUP:-sentex}
+      SERVICE: ${SERVICE:-service-status}
+      SERVICE_FRIENDLY: ${SERVICE_FRIENDLY:-Service Status}
+      SERVICE_DESCRIPTION: ${SERVICE_DESCRIPTION:-Keeps track of services / deployments and health}
+      SERVICE_URL: ${SERICE_URL:-http://localhost:8080}
+      BUILD_HASH: ${BUILD_HASH:-localbuild_hashmissing}
+      BUILD_USER: ${BUILD_USER:-unknown}
+      BUILD_BRANCH: ${BUILD_BRANCH:-nobranch}
+      BUILD_NUMBER: ${BUILD_NUMBER:-1.0.0}
+      BUILD_DATE: ${BUILD_DATE}
+      BUILD_REPO: ${BUILD_REPO}
+
 volumes:
   mysql_data: {}
 
 services:
 
-   api:
-     build:
-       context: ./
-       args:
-         - application=service-status
-         - friendly=Service Status API
-         - build_hash=${BUILD_HASH:-localbuild_hashmissing}
-         - build_user=${BUILD_USER:-unknown}
-         - build_branch=${BUILD_BRANCH:-nobranch}
-         - build_number=${BUILD_NUMBER:-1.0.0}
-         - build_group=${BUILD_GROUP:-nogroupspecified}
-         - repo_url=${REPO_URL}
-         - vendor=${VENDOR:-Chad Grant}
-         - builder_img=${REGISTRY}/chadgrant/base:golang-1.13.5-alpine
-         - runtime_img=${REGISTRY}/chadgrant/base:alpine-3.11.2        
-     image: ${REGISTRY}/chadgrant/service-status-api:${BUILD_NUMBER:-1.0.0}
-     container_name: service_status_api
-     restart: unless-stopped
-     ports:
-       - 5010:8080
-     healthcheck:
-        test: "curl -f http://localhost:8080/health/liveness || exit 1"
+  api:
+      <<: *svc
+      build:
+        context: ./
+        args:
+          <<: *args
+      image: ${DOCKER_REGISTRY:-docker.io}/${VENDOR:-chadgrant}/${DOCKER_IMAGE:-service-status}:${BUILD_NUMBER:-1.0.0}
+      container_name: service_status_api
+      restart: unless-stopped
+      healthcheck:
+        test: "curl -f http://localhost:8080/live || exit 1"
         interval: 30s
         timeout: 2s
         retries: 3
         start_period: 5s
-     environment:
-      MYSQL_DATABASE: service_status
-      MYSQL_USER: docker
-      MYSQL_PASSWORD: password
-      MYSQL_HOST: data
-      MYSQL_PORT: 3306
-        
-   tests:
-      build:
-       context: ./
-       dockerfile: Dockerfile.tests
-       args:
-        - runtime_img=${REGISTRY}/chadgrant/golang-testing:1.13.5-alpine
-      image: ${REGISTRY}/chadgrant/service-status-api-test:${BUILD_NUMBER:-1.0.0}
-      container_name: service_status_api_test
-      depends_on:
-        - data
-        - api
+      ports:
+        - 5010:8080
       environment:
         MYSQL_DATABASE: service_status
         MYSQL_USER: docker
         MYSQL_PASSWORD: password
         MYSQL_HOST: data
-        MYSQL_PORT: 3306        
-        TEST_INTEGRATION: 1
+        MYSQL_PORT: 3306
+
+  tests:
+    <<: *svc
+    build:
+      context: .
+      dockerfile: tests/Dockerfile
+      args:
+        <<: *args
+    image: ${DOCKER_REGISTRY:-docker.io}/${VENDOR:-chadgrant}/${DOCKER_TEST_IMG:-service-status-test}:${BUILD_NUMBER:-1.0.0}
+    container_name: service_status_test
+    depends_on:
+      - data
+      - api
+    environment:
+      MYSQL_DATABASE: service_status
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: data
+      MYSQL_PORT: 3306
+      TEST_INTEGRATION: 1
 
   #  ui:
   #     build:
   #       context: ./ui
-  #     image: ${REGISTRY}/chadgrant/service-status-ui:${BUILD_NUMBER:-1.0.0}
+  #     image: ${DOCKER_REGISTRY:-docker.io}/${VENDOR:-chadgrant}/${DOCKER_UI_IMG:-service-status-ui}:${BUILD_NUMBER:-1.0.0}
   #     container_name: service_status_ui
   #     restart: unless-stopped
   #     ports:
@@ -68,18 +76,18 @@ services:
   #     environment:
   #       API_ENDPOINT: "http://localhost:5010"
 
-   data:
-      build:
-       context: ./db
-      image: ${REGISTRY}/chadgrant/service-status-data:${BUILD_NUMBER:-1.0.0}
-      container_name: service_status_data
-      restart: unless-stopped
-      ports:
-        - 3306:3306
-      volumes:
-        - mysql_data:/var/lib/mysql       
-      environment:
-        MYSQL_ROOT_PASSWORD: rootpassword
-        MYSQL_DATABASE: service_status
-        MYSQL_USER: docker
-        MYSQL_PASSWORD: password         
+  data:
+    build:
+      context: ./db
+    image: ${DOCKER_REGISTRY:-docker.io}/${VENDOR:-chadgrant}/${DOCKER_DB_IMG:-service-status-db}:${BUILD_NUMBER:-1.0.0}
+    container_name: service_status_data
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: service_status
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: password

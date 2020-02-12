@@ -19,13 +19,6 @@ func getIntVarOrDefault(vars map[string]string, name string, defaultVal int) int
 	return defaultVal
 }
 
-func getVarOrDefault(vars map[string]string, name string, defaultVal string) string {
-	if v, ok := vars[name]; ok && len(v) > 0 {
-		return v
-	}
-	return defaultVal
-}
-
 func nextLink(url string, page, size, total int) string {
 	if page*size > total {
 		return ""
